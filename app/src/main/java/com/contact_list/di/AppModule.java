@@ -1,4 +1,4 @@
-package com.contact_list.dagger;
+package com.contact_list.di;
 
 import android.app.Application;
 import android.content.Context;

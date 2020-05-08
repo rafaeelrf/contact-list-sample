@@ -1,6 +1,4 @@
-package com.contact_list.dagger;
-
-import android.app.Application;
+package com.contact_list.di;
 
 import com.contact_list.repository.ContactRepository;
 import com.contact_list.ui.create_contact.CreateContactPresenter;

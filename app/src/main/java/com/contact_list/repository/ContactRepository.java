@@ -29,9 +29,7 @@ public class ContactRepository {
     }
 
     public void updateContact(Contact contact) {
-        ContactRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mContactDao.updateContact(contact);
-        });
+        mContactDao.updateContact(contact);
     }
 
     public void deleteContact(int contactId) {

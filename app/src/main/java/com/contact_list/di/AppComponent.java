@@ -1,4 +1,4 @@
-package com.contact_list.dagger;
+package com.contact_list.di;
 
 import com.contact_list.ui.create_contact.CreateContactActivity;
 import com.contact_list.ui.home.HomeActivity;

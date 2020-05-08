@@ -68,7 +68,8 @@ public class CreateContactActivity extends AppCompatActivity implements CreateCo
 
         createContactButton.setOnClickListener(v -> {
             Contact contact = getContactData();
-            if (getIntent().getExtras() != null) {
+            if (extras != null) {
+                contact.setId(extras.getInt(Constants.CONTACT_ID));
                 presenter.updateContact(contact);
             } else {
                 presenter.insertContact(contact);

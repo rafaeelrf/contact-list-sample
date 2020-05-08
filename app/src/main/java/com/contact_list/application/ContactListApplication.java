@@ -2,9 +2,9 @@ package com.contact_list.application;
 
 import android.app.Application;
 
-import com.contact_list.dagger.AppComponent;
-import com.contact_list.dagger.AppModule;
-import com.contact_list.dagger.DaggerAppComponent;
+import com.contact_list.di.AppComponent;
+import com.contact_list.di.AppModule;
+import com.contact_list.di.DaggerAppComponent;
 
 public class ContactListApplication extends Application {
 
