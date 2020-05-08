@@ -1,5 +1,10 @@
 package com.contact_list.ui.home;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.contact_list.R;
@@ -17,17 +23,19 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
     private List<Contact> mContacts;
-    private EventListerner mListener;
+    private EventListener mListener;
+    private Context mContext;
 
-    ContactAdapter(List<Contact> mContacts, EventListerner mListener) {
-        this.mContacts = mContacts;
-        this.mListener = mListener;
+    ContactAdapter(Context context, List<Contact> contacts, EventListener listener) {
+        this.mContext = context;
+        this.mContacts = contacts;
+        this.mListener = listener;
     }
 
     @NonNull
     @Override
     public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view =  LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.contact_item, parent, false);
         return new ContactViewHolder(view);
     }
@@ -37,6 +45,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         Contact contact = mContacts.get(position);
         holder.contactName.setText(contact.getName());
         holder.contactPhone.setText(contact.getPhone());
+        holder.contactPhone.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + contact.getPhone()));
+            mContext.startActivity(intent);
+        });
         holder.removeContactButton.setOnClickListener(v -> mListener.showEditContactScreen(contact));
     }
 
@@ -60,7 +72,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     }
 
-    public interface EventListerner {
+    public interface EventListener {
         void showEditContactScreen(Contact contact);
     }
 

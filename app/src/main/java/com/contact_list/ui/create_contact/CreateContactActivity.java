@@ -1,5 +1,6 @@
 package com.contact_list.ui.create_contact;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -18,8 +20,11 @@ import com.contact_list.application.ContactListApplication;
 import com.contact_list.db.Contact;
 import com.contact_list.model.AddressResponse;
 import com.contact_list.utils.Constants;
+import com.contact_list.utils.NumberFormatter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
@@ -29,9 +34,9 @@ public class CreateContactActivity extends AppCompatActivity implements CreateCo
     @Inject
     CreateContactPresenter presenter;
 
-    private EditText contactNameInputText;
-    private EditText contactAgeInputText;
-    private EditText contactPhoneInputText;
+    private EditText nameInputText;
+    private EditText ageInputText;
+    private EditText phoneInputText;
     private EditText zipcodeInputText;
     private EditText streetInputText;
     private EditText numberInputText;
@@ -47,15 +52,18 @@ public class CreateContactActivity extends AppCompatActivity implements CreateCo
         ((ContactListApplication) getApplication()).contactListComponent.inject(this);
         presenter.setView(this);
 
-        contactNameInputText = findViewById(R.id.nameInputText);
-        contactAgeInputText = findViewById(R.id.ageInputText);
-        contactPhoneInputText = findViewById(R.id.phoneInputText);
+        nameInputText = findViewById(R.id.nameInputText);
+        ageInputText = findViewById(R.id.ageInputText);
+        phoneInputText = findViewById(R.id.phoneInputText);
         zipcodeInputText = findViewById(R.id.zipcodeInputText);
         streetInputText = findViewById(R.id.streetInputText);
         numberInputText = findViewById(R.id.numberInputText);
         neighboorhoodInputText = findViewById(R.id.neighboorhoodInputText);
         stateInputText = findViewById(R.id.stateInputText);
         cityInputText = findViewById(R.id.cityInputText);
+
+        NumberFormatter addLineNumberFormatter = new NumberFormatter(new WeakReference<EditText>(phoneInputText));
+        phoneInputText.addTextChangedListener(addLineNumberFormatter);
 
         TextView mToolbarTitle = findViewById(R.id.toolbarTitleTextView);
         MaterialButton createContactButton = findViewById(R.id.createContactButton);
@@ -85,9 +93,7 @@ public class CreateContactActivity extends AppCompatActivity implements CreateCo
 
             mToolbarRightButton.setVisibility(View.VISIBLE);
             mToolbarRightButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_remove));
-            mToolbarRightButton.setOnClickListener(v -> presenter.deleteContact(
-                    getIntent().getIntExtra(Constants.CONTACT_ID, 0))
-            );
+            mToolbarRightButton.setOnClickListener(v -> showDeleteContactDialog());
         } else {
             mToolbarTitle.setText(R.string.create_contact_label);
         }
@@ -95,10 +101,25 @@ public class CreateContactActivity extends AppCompatActivity implements CreateCo
         zipcodeInputText.addTextChangedListener(onZipCodeChange());
     }
 
+    private void showDeleteContactDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_contact_dialog_title)
+                .setPositiveButton(R.string.delete_contact_dialog_confirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        presenter.deleteContact(getIntent().getIntExtra(Constants.CONTACT_ID, 0));
+                    }
+                })
+                .setNegativeButton(R.string.delete_contact_dialog_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) { }
+                })
+                .create()
+                .show();
+    }
+
     private void setContactFormData(Contact contact) {
-        contactNameInputText.setText(contact.getName());
-        contactAgeInputText.setText(Integer.toString(contact.getAge()));
-        contactPhoneInputText.setText(contact.getPhone());
+        nameInputText.setText(contact.getName());
+        ageInputText.setText(Integer.toString(contact.getAge()));
+        phoneInputText.setText(contact.getPhone());
         zipcodeInputText.setText(contact.getZipcode());
         streetInputText.setText(contact.getStreet());
         numberInputText.setText(contact.getNumber());
@@ -116,7 +137,7 @@ public class CreateContactActivity extends AppCompatActivity implements CreateCo
     @Override
     public void showInputState(@IdRes int viewId, boolean isValid, @StringRes int errorText) {
         TextInputLayout contactInputLayout = findViewById(viewId);
-        if (isValid){
+        if (isValid) {
             contactInputLayout.setError(null);
         } else {
             contactInputLayout.setError(getString(errorText));
@@ -133,14 +154,14 @@ public class CreateContactActivity extends AppCompatActivity implements CreateCo
 
     private Contact getContactFormData() {
         Contact contact = new Contact();
-        contact.setName(contactNameInputText.getText().toString());
-        String age = contactAgeInputText.getText().toString();
+        contact.setName(nameInputText.getText().toString());
+        String age = ageInputText.getText().toString();
         if (!age.isEmpty()) {
-            contact.setAge((Integer.parseInt(contactAgeInputText.getText().toString())));
+            contact.setAge((Integer.parseInt(ageInputText.getText().toString())));
         } else {
             contact.setAge(0);
         }
-        contact.setPhone(contactPhoneInputText.getText().toString());
+        contact.setPhone(phoneInputText.getText().toString());
         contact.setZipcode(zipcodeInputText.getText().toString());
         contact.setStreet(streetInputText.getText().toString());
         contact.setNumber(numberInputText.getText().toString());
@@ -154,14 +175,18 @@ public class CreateContactActivity extends AppCompatActivity implements CreateCo
     private TextWatcher onZipCodeChange() {
         return new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 String cep = s.toString();
                 if (cep.length() == 8) {
-                     presenter.getAddressData(cep);
+                    presenter.getAddressData(cep);
                 }
             }
         };

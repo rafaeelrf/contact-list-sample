@@ -77,7 +77,12 @@ public class CreateContactPresenterImpl implements CreateContactPresenter {
     private boolean isInvalidContact(Contact contact) {
         createContactView.showInputState(R.id.nameInputTextLayout, !contact.getName().isEmpty(), R.string.name_required_label);
         createContactView.showInputState(R.id.ageInputTextLayout,contact.getAge() > 0, R.string.age_required_label);
-        createContactView.showInputState(R.id.phoneInputTextLayout, !contact.getPhone().isEmpty(), R.string.phone_required_label);
+        
+        int phoneErrorLabel = R.string.phone_required_label;
+        if (contact.getPhone().length() > 0 && contact.getPhone().length() < 14) {
+            phoneErrorLabel = R.string.phone_invalid_label;
+        }
+        createContactView.showInputState(R.id.phoneInputTextLayout, contact.getPhone().length() >= 14, phoneErrorLabel);
         createContactView.showInputState(R.id.zipcodeInputTextLayout, contact.getZipcode().length() == 8, R.string.contact_cep_required);
         createContactView.showInputState(R.id.streetInputTextLayout, !contact.getStreet().isEmpty(), R.string.contact_street_required);
         createContactView.showInputState(R.id.numberInputTextLayout, !contact.getNumber().isEmpty(), R.string.contact_number_required);
@@ -87,7 +92,7 @@ public class CreateContactPresenterImpl implements CreateContactPresenter {
 
         return contact.getName().isEmpty() ||
                 contact.getAge() <= 0 ||
-                contact.getPhone().isEmpty() ||
+                contact.getPhone().length() < 14 ||
                 contact.getZipcode().length() != 8 ||
                 contact.getStreet().isEmpty() ||
                 contact.getNumber().isEmpty() ||

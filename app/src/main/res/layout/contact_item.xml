@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
+                android:autoLink="phone"
                 tools:text="21551252151" />
         </LinearLayout>
 

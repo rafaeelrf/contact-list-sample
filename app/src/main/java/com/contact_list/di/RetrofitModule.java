@@ -13,6 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class RetrofitModule {
 
+    private static String API_BASE_URL = "https://viacep.com.br/ws/";
+
     @Provides
     APIInterface provideApiInterface(Retrofit retroFit) {
         return retroFit.create(APIInterface.class);
@@ -21,7 +23,7 @@ public class RetrofitModule {
     @Provides
     Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl("https://viacep.com.br/ws/")
+                .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)

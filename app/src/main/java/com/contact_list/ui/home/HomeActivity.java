@@ -20,10 +20,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class HomeActivity extends AppCompatActivity implements HomeView, View.OnClickListener, ContactAdapter.EventListerner {
+public class HomeActivity extends AppCompatActivity implements HomeView, View.OnClickListener, ContactAdapter.EventListener {
 
     @Inject HomePresenter presenter;
     private RecyclerView mRecyclerView;
+    private TextView noContactTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView, View.On
         TextView mToolbarTitle = findViewById(R.id.toolbarTitleTextView);
         mToolbarTitle.setText(R.string.contacts_title);
 
+        noContactTextView = findViewById(R.id.noContactTextView);
         ImageButton mToolbarRightButton = findViewById(R.id.rightImageButton);
         mToolbarRightButton.setVisibility(View.VISIBLE);
         mToolbarRightButton.setOnClickListener(this);
@@ -48,7 +50,13 @@ public class HomeActivity extends AppCompatActivity implements HomeView, View.On
 
     @Override
     public void showContacts(List<Contact> contacts) {
-        mRecyclerView.setAdapter(new ContactAdapter(contacts, this));
+        if (contacts.size() == 0) {
+            noContactTextView.setVisibility(View.VISIBLE);
+        } else {
+            noContactTextView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mRecyclerView.setAdapter(new ContactAdapter(this, contacts, this));
+        }
     }
 
     @Override
@@ -66,6 +74,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView, View.On
 
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
+                mRecyclerView.setVisibility(View.GONE);
                 presenter.getAllContacts();
             }
         }
