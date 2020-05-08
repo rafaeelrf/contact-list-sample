@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="custom_toolbar_height">56dp</dimen>
+    <dimen name="custom_toolbar_large_height">64dp</dimen>
+    <dimen name="custom_toolbar_total_height">85dp</dimen>
+</resources>

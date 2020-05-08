@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">contact-list</string>
+    <string name="contacts_title">Contatos</string>
+    <string name="contact_name">Nome</string>
+    <string name="contact_age">Idade</string>
+    <string name="contact_phone">Telefone</string>
+    <string name="create_contact_label">Criar contato</string>
+    <string name="edit_contact_label">Editar contato</string>
+</resources>
