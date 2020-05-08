@@ -6,4 +6,5 @@ public interface CreateContactPresenter {
     void insertContact(Contact contact);
     void updateContact(Contact contact);
     void deleteContact(int contactId);
+    void setView(CreateContactView createContactView);
 }

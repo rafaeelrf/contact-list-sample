@@ -6,4 +6,7 @@
     <string name="contact_phone">Telefone</string>
     <string name="create_contact_label">Criar contato</string>
     <string name="edit_contact_label">Editar contato</string>
+    <string name="name_required_label">Nome é obrigatório</string>
+    <string name="age_required_label">Idade é obrigatória</string>
+    <string name="phone_required_label">Telefone é obrigatório</string>
 </resources>
