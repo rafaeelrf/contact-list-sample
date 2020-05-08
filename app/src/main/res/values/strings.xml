@@ -9,4 +9,16 @@
     <string name="name_required_label">Nome é obrigatório</string>
     <string name="age_required_label">Idade é obrigatória</string>
     <string name="phone_required_label">Telefone é obrigatório</string>
+    <string name="contact_zipcode">CEP</string>
+    <string name="contact_street">Rua</string>
+    <string name="contact_number">Número</string>
+    <string name="contact_state">Estado</string>
+    <string name="contact_city">Cidade</string>
+    <string name="contact_neighborhood">Bairro</string>
+    <string name="contact_cep_required">CEP é obrigatório</string>
+    <string name="contact_street_required">Rua é obrigatório</string>
+    <string name="contact_neighborhood_required">Bairro é obrigatório</string>
+    <string name="contact_number_required">Número é obrigatório</string>
+    <string name="contact_state_required">Estado é obrigatório</string>
+    <string name="contact_city_required">Cidade é obrigatório</string>
 </resources>

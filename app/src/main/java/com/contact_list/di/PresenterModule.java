@@ -1,5 +1,6 @@
 package com.contact_list.di;
 
+import com.contact_list.interactors.GetAddressInteractor;
 import com.contact_list.repository.ContactRepository;
 import com.contact_list.ui.create_contact.CreateContactPresenter;
 import com.contact_list.ui.create_contact.CreateContactPresenterImpl;
@@ -22,7 +23,7 @@ class PresenterModule {
 
     @Provides
     @Singleton
-    CreateContactPresenter provideCreateContactPresenter(ContactRepository contactRepository) {
-        return new CreateContactPresenterImpl(contactRepository);
+    CreateContactPresenter provideCreateContactPresenter(ContactRepository contactRepository, GetAddressInteractor getAddressInteractor) {
+        return new CreateContactPresenterImpl(contactRepository, getAddressInteractor);
     }
 }

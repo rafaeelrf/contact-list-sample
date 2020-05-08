@@ -11,7 +11,6 @@ import java.util.List;
 public class ContactRepository {
 
     private ContactDao mContactDao;
-    private List<Contact> mAllContacts;
 
     public ContactRepository(Application application) {
         ContactRoomDatabase db = ContactRoomDatabase.getDatabase(application);
@@ -35,5 +34,11 @@ public class ContactRepository {
     public void deleteContact(int contactId) {
         mContactDao.deleteContact(contactId);
     }
+
+    public Contact getContactById(int contactId) {
+        return mContactDao.getContactById(contactId);
+    }
+
+
 
 }

@@ -22,4 +22,7 @@ public interface ContactDao {
     @Query("SELECT * FROM contact ORDER BY name ASC")
     List<Contact> getAllContacts();
 
+    @Query("SELECT * FROM contact WHERE id = :contactId")
+    Contact getContactById(int contactId);
+
 }

@@ -6,6 +6,8 @@ import com.contact_list.di.AppComponent;
 import com.contact_list.di.AppModule;
 import com.contact_list.di.DaggerAppComponent;
 
+import io.reactivex.plugins.RxJavaPlugins;
+
 public class ContactListApplication extends Application {
 
     public AppComponent contactListComponent;
@@ -13,6 +15,7 @@ public class ContactListApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        RxJavaPlugins.setErrorHandler(throwable -> {});
         contactListComponent = initDagger(this);
     }
 

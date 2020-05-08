@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView, View.On
         mToolbarRightButton.setOnClickListener(this);
 
         mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.addItemDecoration(new ContactDecoration(getApplicationContext()));
 
         presenter.setView(this);
         presenter.getAllContacts();
@@ -75,9 +76,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView, View.On
     public void showEditContactScreen(Contact contact) {
         Intent intent = new Intent(this, CreateContactActivity.class);
         intent.putExtra(Constants.CONTACT_ID, contact.getId());
-        intent.putExtra(Constants.CONTACT_NAME, contact.getName());
-        intent.putExtra(Constants.CONTACT_AGE, Integer.toString(contact.getAge()));
-        intent.putExtra(Constants.CONTACT_PHONE, contact.getPhone());
         startActivityForResult(intent, 1);
     }
 }

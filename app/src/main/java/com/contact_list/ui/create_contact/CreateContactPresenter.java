@@ -7,4 +7,6 @@ public interface CreateContactPresenter {
     void updateContact(Contact contact);
     void deleteContact(int contactId);
     void setView(CreateContactView createContactView);
+    void getAddressData(String cep);
+    Contact getContactById(int contactId);
 }

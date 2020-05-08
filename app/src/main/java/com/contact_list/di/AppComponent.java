@@ -8,7 +8,9 @@ import javax.inject.Singleton;
 @Singleton
 @Component(modules = {
         AppModule.class,
-        PresenterModule.class
+        PresenterModule.class,
+        RetrofitModule.class,
+        ProvideInteractors.class
 })
 public interface AppComponent {
     void inject(HomeActivity target);

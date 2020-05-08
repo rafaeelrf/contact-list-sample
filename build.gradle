@@ -9,6 +9,11 @@ buildscript {
         okHttpVersion = '4.1.0'
         retrofitVersion = '2.8.1'
         daggerVersion = '2.24'
+        gsonConverterVersion = '2.5.0'
+        okHttpLoggingInterceptorVersion = '4.1.0'
+        rxJava2Version = '2.2.8'
+        rxAndroidVersion = '2.1.1'
+        rxJava2AdapterVersion = '1.0.0'
     }
     
     repositories {

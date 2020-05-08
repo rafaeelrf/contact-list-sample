@@ -21,13 +21,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public Context provideContext() {
+    Context provideContext() {
         return this.app;
     }
 
     @Provides
     @Singleton
-    public Application provideApplication() { return this.app; }
+    Application provideApplication() { return this.app; }
 
     @Provides
     @Singleton
